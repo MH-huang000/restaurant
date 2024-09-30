@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Log_in</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/loginStyles.css">
+</head>
+
+<body>
+    <div class="login-form">
+        <h1>登入</h1>
+        <div class="form-group">
+            <label class="log" for="username">帳號:</label>
+            <input type="text" id="account" placeholder="帳號">
+        </div>
+        <div class="form-group">
+            <label class="log" for="username">密碼:</label>
+            <input type="password" id="password" placeholder="密碼">
+        </div>
+        <div class="button-group">
+            <input type="button" onclick="location.href='regstore.html'" value="註冊店家">
+            <input type="button" id="btn" onclick="location.href='question.html'" value="登入">
+        </div>
+    </div>
+
+    <script>
+        var btn = document.getElementById("btn");
+        var account = document.getElementById("account");
+        var password = document.getElementById("password");
+
+        btn.onclick = function () {
+            var body = {
+                account: account.value,
+                password: password.value
+            }
+
+            fetch("http://localhost:3000/auth/login", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+                .then(res => {
+                    return res.json();
+                })
+                .then(body => {
+                    if (body.msg == "OK") {
+                        var role = body.role;
+                        if (role === "employee") {
+                            location = "./question.html";
+                        } else if (role === "store") {
+                            location = "./admin.html";
+                        }
+                    } else {
+                        alert("登入失敗");
+                    }
+                })
+                .catch(e => {
+                    alert("錯誤: 請稍後再試");
+                })
+        }
+    </script>
+</body>
+
+</html>

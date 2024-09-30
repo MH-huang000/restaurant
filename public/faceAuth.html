@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <h1>我不是機器人</h1>
+
+    <button id="webcamButton">開始驗證</button>
+    <section id="demos" class="invisible">
+        <div id="liveView" class="camView">
+            <video id="webcam" autoplay muted width="640" height="480"></video>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs/dist/tf.min.js" type="text/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd"></script>
+
+    <script>
+        const video = document.getElementById('webcam');
+        const liveView = document.getElementById('liveView');
+        const demosSection = document.getElementById('demos');
+        const enableWebcamButton = document.getElementById('webcamButton');
+
+        function getUserMediaSupported() {
+            return !!(navigator.mediaDevices &&
+                navigator.mediaDevices.getUserMedia);
+        }
+
+        if (getUserMediaSupported()) {
+            enableWebcamButton.addEventListener('click', enableCam);
+        } else {
+            console.warn('getUserMedia() is not supported by your browser');
+        }
+
+        function enableCam(event) {
+            event.target.classList.add('removed');
+
+            const constraints = {
+                video: true
+            };
+
+            navigator.mediaDevices.getUserMedia(constraints).then(function (stream) {
+                video.srcObject = stream;
+                video.addEventListener('loadeddata', predictWebcam);
+            });
+        }
+
+        demosSection.classList.remove('invisible');
+    </script>
+</body>
+
+</html>

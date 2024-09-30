@@ -1,0 +1,30 @@
+header {
+  color: #f2f2f2;
+  background-color: #333;
+  padding: 0%;
+  height: fit-content;
+}
+
+.menu_item_selected,
+.menu_item {
+  cursor: pointer;
+  padding: 2px 4px;
+  height: 100%;
+  font-size: 30px;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+.menu_item:hover {
+  color: #333;
+  background-color: #f2f2f2;
+}
+
+.menu_item_selected {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+#sign_out {
+  cursor: pointer;
+  float: right;
+}

@@ -1,0 +1,97 @@
+/* 重置一些基本的樣式 */
+body, html {
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* 設定頁面的寬度和背景顏色 */
+  body {
+    width: 100%;
+    background-color: #f2f2f2;
+  }
+  
+  /* 設定標題欄的樣式 */
+  header {
+    background-color: #e28e45;
+    height: 50px;
+  }
+  .regemployee-form {
+    background-color: #fff;
+    width: 600px;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    padding: 20px;
+    border-radius: 20px;
+  }
+  
+  .regemployee-form h1 {
+    text-align: center;
+    color: #333;
+    font-size: 200%;
+  }
+ 
+  .regemployee-form input[type="text"],
+  .regemployee-form input[type="password"]{
+    width: 70%;
+    padding: 10px;
+    margin-bottom: 10px;
+    /* margin-left: 60px; */
+    border: 2px solid #170909; 
+    border-radius: 10px;
+    font-size: 80%;
+
+  }
+  
+  .regemployee-form input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 10px;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 4px;
+  }
+  .form-group {
+    /* display: flex; */
+    margin-bottom: 5px;
+    padding: 10px 10px;
+    font-size: 200%;
+    padding: 20px;  
+  }
+  .button-group {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .button-group input[type="button"] {
+    flex: 1;
+    width: 100%;
+    margin-left: 70%;
+    font-size: 160%;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    
+    border-radius: 10px;
+  }
+  .form-group select{
+    flex: 1;
+    width: 80%;
+    margin: 0 5px;
+    font-size: 80%;
+    border-radius: 10px;
+  }
+  .text{
+    width: 100%;
+    padding: 20px;
+    margin: 20px;
+    margin-left: 15%;
+    margin-right: 0px;
+    border: 2px solid #170909; 
+    border-radius: 10px;
+    font-size: 160%;
+  }

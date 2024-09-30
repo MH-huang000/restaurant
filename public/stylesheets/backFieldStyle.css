@@ -1,0 +1,109 @@
+/* 重置一些基本的樣式 */
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+/* 設定頁面的寬度和背景顏色 */
+body {
+    width: 100%;
+    background-color: #f2f2f2;
+}
+
+/* 設定標題欄的樣式 */
+header {
+    background-color: #ffffff;
+    height: 50px;
+}
+.up-group {
+    width: 50px auto;
+    display: flex;
+    justify-content: space-between; 
+}
+.div2{
+    flex: 1;
+    font-size: 210%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #170909; 
+    background-color: rgb(236, 167, 76);
+}
+.div3{
+    flex: 1;
+    font-size: 210%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #170909; 
+    cursor: pointer;  
+}
+.main-group{
+    margin-top: 50px;
+    margin-left: 10%;
+    margin-right: 10%;
+    background-color: rgb(255, 255, 255);
+}
+.div4{
+    max-height: 14cm;
+    padding: 5%;
+    overflow: auto;
+}
+.div5{
+    flex: 2;
+    font-size: 210%;
+    display: flex;
+}
+.div6{
+    flex: 1;
+    font-size: 210%;
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid #170909; 
+}
+.div6 button{
+    padding-left: 10%;
+    padding-right: 10%;
+    font-size: 100%;
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color: #fff;
+    border: 2px solid #ffffff; 
+
+}
+.down-group{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+}
+.div7{
+    /* width: 30%;  */
+    flex: 7;
+    font-size: 210%;
+    margin: 2%;
+}
+.button-group {
+    flex: 3;
+    width: 30%;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 10px;
+    font-size: 160%;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .add{
+    flex: 1;
+    font-size: 150%;
+    cursor: pointer;
+    width:29.2px;
+  }
+  .div8{
+    padding-left: 8%;
+    font-size: 150%;
+    display: none;
+}
+.div9{
+    margin-left:70%;
+}

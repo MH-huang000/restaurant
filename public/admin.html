@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>管理</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <main>
+        <div id="chat">
+            <div>
+                <div class="bot_msg">Welcome!</div>
+            </div>
+        </div>
+        <input id="msg" placeholder="輸入訊息...">
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+
+    <script>
+        var msgInput = document.getElementById("msg");
+        var chatBox = document.getElementById("chat");
+
+        msgInput.addEventListener("keyup", function (event) {
+            if (event.key === "Enter") {
+                var text = msgInput.value.trim();
+                if (text != "") {
+                    chatBox.innerHTML += `<div class="user">        
+                        <span class="user_msg">${text}</span>
+                    </div>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                    msgInput.value = '';
+
+                    if (text === "登出") {
+                        chatBox.innerHTML += `<div>
+                                <div class="bot_msg">OK</div>
+                            </div>`;
+                        setTimeout(logout, 300);
+                    } else {
+                        sendMsg(text);
+                    }
+                }
+            }
+        });
+
+        function sendMsg(text) {
+            fetch("http://localhost:3000/api/chat", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ text: text })
+            })
+                .then(res => {
+                    return res.json();
+                })
+                .then(body => {
+                    var msg = body.msg;
+                    chatBox.innerHTML += `<div>
+                        <div class="bot_msg">${msg}</div>
+                    </div>`;
+                    chatBox.scrollTop = chatBox.scrollHeight;
+
+                    if (body.loc) {
+                        setTimeout(() => {
+                            location = body.loc;
+                        }, 300);
+                    }
+
+                    if (body.chart) {
+                        chart(body.chart, body.contain);
+                    }
+                })
+        }
+
+        function logout() {
+            fetch("http://localhost:3000/auth/logout", {
+                method: "POST",
+            })
+                .then(res => {
+                    location = "http://localhost:3000/app/login.html";
+                })
+                .catch(e => {
+                    chatBox.innerHTML += `<div>
+                        <div class="bot_msg">很抱歉，出了一些問題，請稍後再試</div>
+                    </div>`;
+                });
+        }
+
+        function chart(id, contain) {
+            const ctx = document.getElementById(`chart${id}`);
+
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: contain.labels,
+                    datasets: [{
+                        label: '# 銷售統計',
+                        data: contain.data,
+                        borderWidth: 1,
+                        backgroundColor: "rgba(74, 167, 249,0.2)",
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

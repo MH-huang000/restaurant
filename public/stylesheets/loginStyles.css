@@ -1,0 +1,75 @@
+/* 重置一些基本的樣式 */
+body, html {
+    margin: 0;
+    padding: 0;
+}
+
+/* 設定頁面的寬度和背景顏色 */
+body {
+  width: 100%;
+  background-color: #f2f2f2;
+}
+
+/* 設定標題欄的樣式 */
+header {
+  background-color: #e28e45;
+  height: 50px;
+}
+
+/* 設定登入表單的樣式 */
+.login-form {
+  background-color: #fff;
+  width: 600px;
+  margin: 0 auto;
+  margin-top: 50px;
+  padding: 20px;
+  border-radius: 20px;
+}
+
+.login-form h1 {
+  text-align: center;
+  color: #333;
+  font-size: 200%;
+}
+
+.login-form input[type="text"],
+.login-form input[type="password"] {
+  width: 60%;
+  padding: 20px;
+  margin-bottom: 30px;
+  border: 2px solid #170909; 
+  border-radius: 10px;
+  font-size: 160%;
+}
+
+.login-form input[type="button"] {
+  background-color: #333;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  width: 100%;
+  border-radius: 4px;
+}
+.form-group {
+  display: flex;
+  margin-bottom: 10px;
+  padding: 10px 10px;
+}
+.log{
+  font-size: 180%;
+  padding: 20px;
+}
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.button-group input[type="button"] {
+  flex: 1;
+  margin: 0 5px;
+  font-size: 160%;
+  border-radius: 10px;
+}
+

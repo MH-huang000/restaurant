@@ -1,0 +1,64 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+/* 設定頁面的寬度和背景顏色 */
+body {
+  width: 100%;
+  background-color: #f2f2f2;
+}
+
+/* 設定標題欄的樣式 */
+header {
+  background-color: #ffffff;
+  height: 50px;
+}
+
+.bot_msg {
+  background-color: rgb(154, 154, 154);
+  color: white;
+  font-size: 24px;
+  padding: 8px 16px;
+  margin: 12px;
+  border-radius: 12px;
+  width: fit-content;
+  max-width: 40vw;
+}
+
+.user {
+  text-align: right;
+}
+
+.user_msg {
+  background-color: rgb(67, 146, 255);
+  color: white;
+  font-size: 24px;
+  padding: 8px 16px;
+  margin: 12px;
+  border-radius: 12px;
+  width: fit-content;
+  max-width: 40vw;
+  text-align: right;
+}
+
+main {
+  margin: auto;
+  width: 80vw;
+  height: 100vh;
+}
+
+#chat {
+  background-color: white;
+  overflow: auto;
+  height: 85%;
+}
+
+#msg {
+  width: 95%;
+  padding: 20px;
+  border: 2px solid #170909;
+  border-radius: 10px;
+  font-size: 160%;
+}

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>前場</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/frontFieldStyle.css">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <header>
+        <a onclick="location.href='frontField.html'" class="menu_item_selected">前場</a>
+        <a onclick="location.href='backField.html'" class="menu_item">後場</a>
+        <a onclick="location.href='editMenu.html'" class="menu_item">編輯菜單</a>
+        <i id="sign_out" class="fa fa-sign-out" style="font-size:32px; color: aliceblue;"></i>
+    </header>
+
+    <div class="main-group">
+        <!-- <header>
+            <div class="up-group">
+                <input type="button" class="div2" onclick="location.href='frontField.html'" value="前場">
+                <input type="button" class="div3" onclick="location.href='backField.html'" value="後場">
+                <input type="button" class="div3" onclick="location.href='editMenu.html'" value="編輯菜單">
+            </div>
+        </header> -->
+        <div id="items">
+            <div class="item">
+                <div class="div5">品項2</div>
+                <div class="div5">$100</div>
+                <div class="div6">
+                    <button onclick="changeValue('counter2', 'decrement')">-</button>
+                    <span id="counter2">0</span>
+                    <button onclick="changeValue('counter2', 'increment')">+</button>
+                </div>
+            </div>
+        </div>
+        <input id="btn" type="button" class="button-group" onclick="location.href='frontField.html'" value="點單">
+    </div>
+
+    <script>
+        var menuItems = null;
+        var orderItems = null;
+
+        function changeValue(id, action) {
+            var amount = changeViewValue(`counter${id}`, action);
+            orderItems[id].amount = amount;
+        }
+
+        function changeViewValue(id, action) {
+            var counter = document.getElementById(id);
+            var value = parseInt(counter.textContent);
+
+            if (action === 'increment') {
+                value++;
+            }
+            if (action === 'decrement') {
+                if (value > 0) {
+                    value--;
+                }
+            }
+
+            counter.textContent = value;
+            return value;
+        }
+
+        function updateView() {
+            fetch("../api/items").
+                then(res => {
+                    return res.json();
+                }).then(items => {
+                    menuItems = items;
+                    orderItems = JSON.parse(JSON.stringify(menuItems));
+                    loadView(items);
+                })
+        }
+
+        function loadView(items) {
+            var itemsView = document.getElementById("items");
+            itemsView.innerHTML = "";
+            for (let i = 0; i < items.length; i++) {
+                var item = `
+                    <div class="item">
+                        <div class="div5">${items[i].name}</div>
+                        <div class="div5">$${items[i].price}</div>
+                        <div class="div6">
+                            <button onclick="changeValue(${i}, 'decrement')">-</button>
+                            <span id="counter${i}">0</span>
+                            <button onclick="changeValue(${i}, 'increment')">+</button>
+                        </div>
+                    </div>`
+                itemsView.innerHTML += item;
+            }
+        }
+
+        var btn = document.getElementById("btn");
+        btn.onclick = function () {
+            if (orderItems === null) {
+                return alert("請先新增菜單內容");
+            }
+
+            var body = [];
+            for (let item of orderItems) {
+                if (item.amount) {
+                    if (item.amount != 0) {
+                        body.push(item);
+                    }
+                }
+            }
+
+            if (body.length === 0) {
+                alert("訂單不可為空");
+            } else {
+                makeOrder(body);
+            }
+            loadView(menuItems);
+        }
+
+        function makeOrder(items) {
+            var body = { items: items };
+            fetch("http://localhost:3000/api/create/order", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(body)
+            })
+                .then(res => {
+                    alert("新增訂單成功");
+                    orderItems = JSON.parse(JSON.stringify(menuItems));
+                })
+        }
+
+        updateView();
+    </script>
+    <script src="./javascripts/logout.js"></script>
+
+</body>
+
+</html>

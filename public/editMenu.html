@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>編輯菜單</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/editMenuStyle.css">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <header>
+        <a onclick="location.href='frontField.html'" class="menu_item">前場</a>
+        <a onclick="location.href='backField.html'" class="menu_item">後場</a>
+        <a onclick="location.href='editMenu.html'" class="menu_item_selected">編輯菜單</a>
+        <i id="sign_out" class="fa fa-sign-out" style="font-size:32px; color: aliceblue;"></i>
+    </header>
+
+    <div class="main-group">
+        <!-- <header>
+            <div class="up-group">
+                <input type="button" class="div3" onclick="location.href='frontField.html'" value="前場">
+                <input type="button" class="div3" onclick="location.href='backField.html'" value="後場">
+                <input type="button" class="div2" onclick="location.href='editMenu.html'" value="編輯菜單">
+            </div>
+        </header> -->
+        <div id="items">
+            <div class="up-group">
+                目前菜單沒有內容
+            </div>
+        </div>
+        <input type="button" class="button-group" onclick="location.href='newMenu.html'" value="新增品項">
+    </div>
+
+    <script>
+        function updateView() {
+
+            fetch("../api/items").
+                then(res => {
+                    return res.json();
+                }).then(items => {
+                    loadView(items);
+                })
+        }
+
+        function loadView(items) {
+            var itemsView = document.getElementById("items");
+            itemsView.innerHTML = "";
+            for (let i = 0; i < items.length; i++) {
+                var item = `
+                <div class="up-group">
+                    <div class="div5">${items[i].name}</div>
+                    <div class="div6">$${items[i].price}</div>
+                    <input type="button" class="button-delete" value="刪除" onclick="deleteItem(${items[i].id})">
+                </div>`
+                itemsView.innerHTML += item;
+            }
+        }
+
+        function deleteItem(id) {
+            fetch(`../api/delete/item/${id}`, {
+                method: "DELETE"
+            })
+                .then(res => {
+                    alert("刪除成功!");
+                    updateView();
+                })
+        }
+
+        updateView();
+    </script>
+
+    <script src="./javascripts/logout.js"></script>
+</body>
+
+</html>

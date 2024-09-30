@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Question</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/questionStyle.css">
+</head>
+
+<body>
+    <div class="question-form">
+        <h1>安全性問題</h1>
+        <form>
+            <h2 id="question"></h2>
+            <input type="text" placeholder="Your answer." id="answer">
+            <div class="button-group">
+                <input id="btn" type="button" onclick="location.href='frontField.html'" value="送出">
+            </div>
+        </form>
+    </div>
+
+    <script>
+        var questionDisplay = document.getElementById("question");
+        var btn = document.getElementById("btn");
+        var answerInput = document.getElementById("answer");
+        var question = "";
+        var answer = "";
+
+        function logout() {
+            fetch("http://localhost:3000/auth/logout");
+        }
+
+        fetch("http://localhost:3000/auth/qa")
+            .then(res => {
+                return res.json();
+            })
+            .then(body => {
+                question = body.question;
+                answer = body.answer;
+            }).then(final => {
+                questionDisplay.innerHTML = question;
+            })
+
+        btn.onclick = function () {
+            var userAnswer = answerInput.value;
+            if (userAnswer === answer) {
+                location = "./frontField.html";
+            } else {
+                alert("回答錯誤，請重新登入");
+                logout();
+            }
+        }
+    </script>
+</body>
+
+</html>

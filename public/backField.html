@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>後場</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/backFieldStyle.css">
+    <link rel="stylesheet" type="text/css" href="./stylesheets/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <header>
+        <a onclick="location.href='frontField.html'" class="menu_item">前場</a>
+        <a onclick="location.href='backField.html'" class="menu_item_selected">後場</a>
+        <a onclick="location.href='editMenu.html'" class="menu_item">編輯菜單</a>
+        <i id="sign_out" class="fa fa-sign-out" style="font-size:32px; color: aliceblue;"></i>
+    </header>
+
+    <div class="main-group">
+        <!-- <header>
+            <div class="up-group">
+                <input type="button" class="div3" onclick="location.href='frontField.html'" value="前場">
+                <input type="button" class="div2" onclick="location.href='backField.html'" value="後場">
+                <input type="button" class="div3" onclick="location.href='editMenu.html'" value="編輯菜單">
+            </div>
+        </header> -->
+        <div class="div4" id="orders">
+            目前沒有訂單
+        </div>
+
+    </div>
+
+    <script>
+        function updateView() {
+
+            fetch("../api/orders").
+                then(res => {
+                    return res.json();
+                }).then(orders => {
+                    loadView(orders);
+                })
+        }
+
+        updateView();
+
+        function loadView(orders) {
+            var orderView = document.getElementById("orders");
+            console.log(orderView.innerHTML);
+            orderView.innerHTML = "";
+            for (let i = 0; i < orders.length; i++) {
+                var order = `
+                <div>
+                    <div class="down-group">
+                        <div>
+                            <input type="button" class="add" id = "toggleButton${orders[i].id}" onclick="toggleContent('content${orders[i].id}', 'toggleButton${orders[i].id}')" value="+">
+                        </div>
+                        <div class="div7">訂單${orders[i].id}</div>
+                        <input type="button" class="button-group" onclick="finishOrder(${orders[i].id})" value="完成">
+                    </div>
+                    <div class="div8" id="content${orders[i].id}">`;
+                for (let j = 0; j < orders[i].items.length; j++) {
+                    var item = `
+                                <li> ${orders[i].items[j].name} <span> × ${orders[i].items[j].amount}</span></li>
+                            `;
+                    order += item;
+                }
+                order += `    <p class="div9">共: $<span>${orders[i].total}</span></p>
+                        </div>
+                    </div>
+                    `;
+                orderView.innerHTML += order;
+            }
+        }
+
+        function finishOrder(orderId) {
+            fetch(`../api/fin/order/${orderId}`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            })
+                .then(res => {
+                    alert("完成訂單!");
+                    updateView();
+                });
+        }
+
+        function toggleContent(contentId, toggleButtonId) {
+            var content = document.getElementById(contentId);
+            var toggleButton = document.getElementById(toggleButtonId);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+                toggleButton.value = "+";
+            } else {
+                content.style.display = "block";
+                toggleButton.value = "-";
+            }
+        }
+    </script>
+
+    <script src="./javascripts/logout.js"></script>
+</body>
+
+</html>

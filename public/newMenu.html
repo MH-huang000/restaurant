@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>新增菜單</title>
+    <link rel="stylesheet" type="text/css" href="./stylesheets/newMenuStyle.css">
+</head> 
+<body>
+    <div class="div2">
+        <h1>新增品項</h1>
+        <div>
+            <label  for="username">名稱:</label>
+            <input type="text" id="username" placeholder="Name">
+        </div>
+        <div>
+            <label for="username">價格:</label>
+            <input type="text" id="price" placeholder="Price" >
+        </div>
+        <input type="button" id= "updateButton" value="確定">
+        <script>
+            function updateItem(name, price){
+                fetch("../api/create/item",{
+                    method: "POST",
+                    headers:{
+                        'Content-Type' : 'application/json',
+                    },
+                    body: JSON.stringify({name: `${name}`, price: `${price}`})
+                    
+                })
+                .then(res=>{
+                    return res.json();
+                })
+                .then(id=>{
+                    console.log(id);
+                })
+                alert("新增成功!");
+                window.location.href = "editMenu.html";
+            }
+            document.getElementById("updateButton").addEventListener("click", function() {
+                var name = document.getElementById("username").value;
+                var price = document.getElementById("price").value;
+                updateItem(name, price);
+            });
+        </script>
+    </div>
+</body>
+</html>
